@@ -15,9 +15,10 @@ function makeRequest(event) {
   };
 
   var message = document.getElementById("input").value;
-  console.log(message);
+  let endpoint = "http://127.0.0.1:5000/api"
+  let url = endpoint.concat('/', message);
 
-  xhttp.open("GET", "http://127.0.0.1:5000/api/makeRequest", true);
+  xhttp.open("GET", url, true);
   xhttp.send();
   event.preventDefault();
   console.log(this.responseText)

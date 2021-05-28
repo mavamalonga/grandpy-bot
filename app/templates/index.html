@@ -2,13 +2,18 @@
 <html>
 <head>
   <title></title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
-  <form id="form">
-    <label>Test field: <input id="input" type="text"></label>
-    <button type="submit">Submit</button>
-  </form>
-<p id="log"></p>
-<script type="text/javascript" src="{{ url_for('static', filename='js/ajax.js') }}"></script>
+	<form id="form">
+    	<label>Test field: <input id="input" type="text"></label>
+    	<button type="submit" >Submit</button>
+    	<div id="log"></div>
+ 	</form>
+ 	<div id="map"></div>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/ajax.js') }}"></script>
+ 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJkQv_luEG06kd1L_ssrPAGsIi5-JLLwI&callback=initMap&libraries=&v=weekly" async>
+ 	</script>
 </body>
 </html>

@@ -21,6 +21,7 @@ function makeRequest(event) {
     if (this.readyState == 4 && this.status == 200) {
       response = JSON.parse(this.responseText)
       document.getElementById("log").innerHTML = response['sentences']
+
       initMap()
     }
   };
@@ -31,7 +32,6 @@ function makeRequest(event) {
   xhttp.send();
   event.preventDefault();
 };
-
 
 
 const form = document.getElementById('form');

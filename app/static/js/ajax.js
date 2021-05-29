@@ -1,14 +1,27 @@
+var response = {
+  'geolocation': {
+    'lat': -34.397,
+    'lng': 150.644
+  }
+};
 
-let response;
-var boolean = false;
+
+let map;
+function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: parseInt(response['geolocation']['lat']), lng: parseInt(response['geolocation']['lng']) },
+    zoom: 8,
+  });
+}
+
 
 function makeRequest(event) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      var response = JSON.parse(this.responseText)
+      response = JSON.parse(this.responseText)
       document.getElementById("log").innerHTML = response['sentences']
-      boolean = true
+      initMap()
     }
   };
   var message = document.getElementById("input").value;
@@ -20,16 +33,6 @@ function makeRequest(event) {
 };
 
 
-let map;
-function initMap() {
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: -34.397, lng: 150.644 },
-    zoom: 8,
-  });
-}
-
-
 
 const form = document.getElementById('form');
 form.addEventListener('submit', makeRequest);
-

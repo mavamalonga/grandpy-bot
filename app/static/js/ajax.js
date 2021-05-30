@@ -15,39 +15,55 @@ function initMap() {
 }
 
 
-function checkInputContains(){
-  var value, text;
-  value = document.getElementById("input").value;
-  if (value === ""){
-    text = "input not valid";
+function checkInputText(){
+
+  question = document.getElementById("input").value;
+  if (question === ""){
+    text = 'False';
   }else{
-    text = "input Ok";
+    text = 'True';
   }
-  document.getElementById('log').innerHTML = text;
-  return false;
 }
 
 
-
 function makeRequest(event) {
+    var xhttp = new XMLHttpRequest();
 
+    checkInputText()
+    console.log(text)
 
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      response = JSON.parse(this.responseText)
-      document.getElementById("log").innerHTML = response['sentences']
+    if (text === 'True'){
+        let endpoint = "http://127.0.0.1:5000/api"
+        let url = endpoint.concat('/', question);
+        xhttp.open("GET", url, true);
+        xhttp.send();
+        event.preventDefault();
 
-      initMap()
-    }
+        xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+           response = JSON.parse(this.responseText)
+           console.log(response)
+           if (response !== ""){
+
+              if (response["sentences"] !== ""){
+                document.getElementById("log").innerHTML = response['sentences']
+              }
+
+              if (response["geolocation"] !== ""){
+                initMap()
+              }
+              
+            }else{
+              document.getElementById("log").innerHTML = "Désolé mec j'ai pas capté ta question";
+            }
+          }
+        }
+    }else if (text === 'False'){
+      document.getElementById("log").innerHTML = "Désolé mec j'ai pas capté ta question";
+    };
+
   };
-  var message = document.getElementById("input").value;
-  let endpoint = "http://127.0.0.1:5000/api"
-  let url = endpoint.concat('/', message);
-  xhttp.open("GET", url, true);
-  xhttp.send();
-  event.preventDefault();
-};
+
 
 
 const form = document.getElementById('form');

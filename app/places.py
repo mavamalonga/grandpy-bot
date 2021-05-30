@@ -21,6 +21,7 @@ class Places:
             try:
                 return response['candidates'][0]['geometry']['location']
             except Exception as e:
-                return 'Not Found.'
+                return ''
         else:
-            return 'Not Found.'
+            return ''
+

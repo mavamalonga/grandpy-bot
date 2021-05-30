@@ -15,7 +15,23 @@ function initMap() {
 }
 
 
+function checkInputContains(){
+  var value, text;
+  value = document.getElementById("input").value;
+  if (value === ""){
+    text = "input not valid";
+  }else{
+    text = "input Ok";
+  }
+  document.getElementById('log').innerHTML = text;
+  return false;
+}
+
+
+
 function makeRequest(event) {
+
+
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {

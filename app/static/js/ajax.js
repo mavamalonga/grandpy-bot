@@ -46,7 +46,11 @@ function makeRequest(event) {
            if (response !== ""){
 
               if (response["sentences"] !== ""){
-                document.getElementById("log").innerHTML = response['sentences']
+                //let chat = document.getElementById('chat');
+                //let div = document.createElement('div');
+                //div.innerHTML = response['sentences']
+                //chat.appendChild(div);
+                document.getElementById("papy").innerHTML = response['sentences']
               }
 
               if (response["geolocation"] !== ""){

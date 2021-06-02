@@ -1,13 +1,17 @@
-from flask import render_template, redirect, flash, jsonify
+from flask import render_template, redirect, flash, jsonify, request
 from app import app
-from app.bot_words import Dictionary_Of_Words
 from app.places import Places
 from app.wiki import MediaWiki
+from app.grandpy import Vocabulary
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=('GET', 'POST'))
+@app.route('/index', methods=('GET', 'POST'))
 def index():
-	return render_template('index.html')
+	if request.method == 'GET':
+		voice = Vocabulary()
+		catch_phrase =  voice.say()
+
+	return render_template('index.html', catch_phrase=catch_phrase)
 
 @app.route('/api/<message>', methods=('GET', 'POST'))
 def api(message):

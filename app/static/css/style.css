@@ -24,6 +24,23 @@ body {
   padding: 0;
 }
 
+#papy {
+	display: block;
+	width: 300px;
+}
+
+#input {
+	display: block;
+	width: 300px;
+	background-color: white;
+	border: white;
+}
+
+#submit {
+	display: block;
+	margin-left: 200px;
+}
+
 /* Chat containers */
 .container {
 	display: block;

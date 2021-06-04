@@ -21,13 +21,11 @@ class MediaWiki:
 
 	def extracts_text_with_title(self):
 		if self.title != '':
-			self.params = { "action": "query", 
-				"prop": "extracts", 
-				"exsentences": 2, 
-				"exlimit": 1, 
-				"titles": str(self.title), 
-				"explaintext": 1, 
-				"format": "json"
+			self.params = { 
+				"action": "query", 
+				"format": "json",
+				"list": "search", 
+				"srsearch": str(self.title)
 			}
 			self.response = self.request.get(url=self.url, params=self.params)
 		
@@ -36,9 +34,14 @@ class MediaWiki:
 
 				"""get the pageId, for extract the text content"""
 				try:
+					"""
 					for key, value in self.data['query']['pages'].items(): 
 						self.pageId = key
+						print(self.data)
 						return self.data['query']['pages'][self.pageId]['extract']
+					"""
+				
+					return self.data
 				except Exception as e:
 					return ''
 			else:
@@ -86,3 +89,6 @@ class MediaWiki:
 				return response
 			else:
 				return ''
+
+m = MediaWiki('Avenue charles gaule')
+print(m.extracts_text_with_title())

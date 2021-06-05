@@ -19,76 +19,66 @@ class MediaWiki:
 		self.title = title
 		self.location = location
 
-	def extracts_text_with_title(self):
-		if self.title != '':
-			self.params = { 
-				"action": "query", 
-				"format": "json",
-				"list": "search", 
-				"srsearch": str(self.title)
-			}
-			self.response = self.request.get(url=self.url, params=self.params)
+	def select_title(self):
+		pass
+
+	def extracts_text(self, pageId):
+
+		self.params = { 
+			"action": "query",
+			"prop": "extracts",
+			"exsentences": 10,
+			"exlimit":1,
+			"pageids": pageId,
+			"explaintext":1,
+			"format": "json"
+		}
 		
-			if self.response.status_code == 200:
+		self.response = self.request.get(url=self.url, params=self.params)
+		
+		if self.response.status_code == 200:
+			try:
 				self.data = self.response.json()
-
-				"""get the pageId, for extract the text content"""
-				try:
-					"""
-					for key, value in self.data['query']['pages'].items(): 
-						self.pageId = key
-						print(self.data)
-						return self.data['query']['pages'][self.pageId]['extract']
-					"""
-				
-					return self.data
-				except Exception as e:
-					return ''
-			else:
-				return ''
+				for key, value in self.data['query']['pages'].items():
+					return value['extract']
+			except:
+				return 'Failed request'
 		else:
-			return ''
+			return 'Failed request'
 
-	def get_title_with_geosearch(self):
-		#"https://fr.wikipedia.org/w/api.php?action=query&list=geosearch&gscoord=37.7891838%7C-122.4033522&gsradius=10000&gslimit=100&format=json".format(self.location['lat'], self.location['lng'])
-		
-		if self.location != '':
-			url = "https://fr.wikipedia.org/w/api.php?action=query&list=geosearch&gscoord={0}%7C{1}&gsradius=10000&gslimit=100&format=json".format(self.location['lat'], self.location['lng'])
-			'''
-			payload={
-				'action': 'query',
-				'list': 'geosearch',
-				'gsradius': 10000,
-				'gslimit':100,
-				'format': 'json',
-				'gscoord': '37.7891838%7C-122.4033522'
-			}
-			'''
 
-			response = self.request.get(url=url)
 
-			if response.status_code == 200:
-				try:
-					return response.json()['query']['geosearch'][0]['title']
-				except Exception as e:
-					return ''
-			else:
-				return ''
+	def prefixsearch(self):
+		"""Perform a prefix search for page titles"""
+		S = requests.Session()
+
+		URL = "https://fr.wikipedia.org/w/api.php"
+
+		PARAMS = {
+    		"action": "query",
+    		"format": "json",
+    		"list": "prefixsearch",
+    		"pssearch": str(self.title)
+		}
+
+		R = S.get(url=URL, params=PARAMS)
+
+		if R.status_code == 200:
+			try:
+				DATA = R.json()
+				PAGES = DATA['query']['prefixsearch']
+				return PAGES
+			except:
+				return 'Failed request'
 		else:
-			return ''
+			return 'Failed request'
 
 	def main(self):
-		response = self.extracts_text_with_title()
-		if response != '':
-			return response
-		else:
-			response = self.get_title_with_geosearch()
-			if response != '':
-				self.title = response
-				response = self.extracts_text_with_title()
-				return response
-			else:
-				return ''
+		pageid = self.prefixsearch()
+		text = self.extracts_text(pageId)
+		return text
 
-m = MediaWiki('Avenue charles gaule')
-print(m.extracts_text_with_title())
+
+
+m = MediaWiki('avenue charles de gaule')
+print(m.prefixsearch())

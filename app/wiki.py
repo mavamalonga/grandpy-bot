@@ -32,22 +32,33 @@ class MediaWiki:
 		else:
 			return word
 
-	def compare_number_common_word(self, t_word, word_form_content):
+	def count_nb_common_word(self, t_word, word_form_content):
+
+		nb_common_word = 0
 		try:
-			if type(t_word) == 'str':
+			if type(t_word) == str:
 				for f_word in word_form_content:
 					if t_word.lower() == f_word.lower():
 						nb_common_word += 1
-		except Exception as e:
-			for tt_word in t_word:
-				for f_word in word_form_content:
-					if t_word.lower() == f_word.lower():
-						nb_common_word += 1
-		finally:
-			return nb_common_word
+			else:
+				for tt_word in t_word:
+					for f_word in word_form_content:
+						if tt_word.lower() == f_word.lower():
+							nb_common_word += 1
+		except:
+			print('Failed value')
+	
+		return nb_common_word
+
+	def compare_max_word_per_page(self):
+		if nb_common_word > max_common_word:
+			max_common_word = nb_common_word
+			pageid = page['pageid']
+		return pageid
 
 
-	def select_title_with_more_common_word(self):
+
+	def select_the_best_pageid(self):
 
 		word_form_content = self.title.split() # on recupere les mots cles de la recherche
 		PAGES = self.prefixsearch()
@@ -60,8 +71,10 @@ class MediaWiki:
 
 			for t_word in title_list_word:
 				t_word = self.filter_word(t_word)
-				nb_common_word = self.compare_number_common_word(t_word, word_form_content)
+				res_nb = self.count_nb_common_word(t_word, word_form_content)
+				nb_common_word += res_nb
 
+			#self.compare_max_word_per_page(nb_common_word, max_common_word)
 			if nb_common_word > max_common_word:
 				max_common_word = nb_common_word
 				pageid = page['pageid']
@@ -128,5 +141,5 @@ class MediaWiki:
 
 
 
-m = MediaWiki('avenue charles de gaule')
-print(m.select_title_with_more_common_word())
+m = MediaWiki('avenue charles de gaulle')
+print(m.select_the_best_pageid())

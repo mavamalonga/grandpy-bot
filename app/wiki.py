@@ -19,8 +19,56 @@ class MediaWiki:
 		self.title = title
 		self.location = location
 
-	def select_title(self):
-		pass
+	def filter_word(self, word):
+
+		word = word.replace('(', '')
+		word = word.replace(')', '')
+		word = word.replace('-', ' ')
+
+		new_split = word.split()
+
+		if len(new_split) > 1:
+			return new_split
+		else:
+			return word
+
+	def compare_number_common_word(self, t_word, word_form_content):
+		try:
+			if type(t_word) == 'str':
+				for f_word in word_form_content:
+					if t_word.lower() == f_word.lower():
+						nb_common_word += 1
+		except Exception as e:
+			for tt_word in t_word:
+				for f_word in word_form_content:
+					if t_word.lower() == f_word.lower():
+						nb_common_word += 1
+		finally:
+			return nb_common_word
+
+
+	def select_title_with_more_common_word(self):
+
+		word_form_content = self.title.split() # on recupere les mots cles de la recherche
+		PAGES = self.prefixsearch()
+
+		max_common_word = 0
+		nb_common_word = 0
+		pageid = 0
+		for page in PAGES:              # On recupere chaque resulatat de la recherche mediwii
+			title_list_word = page['title'].split()     # On separer chaque mot du titre
+
+			for t_word in title_list_word:
+				t_word = self.filter_word(t_word)
+				nb_common_word = self.compare_number_common_word(t_word, word_form_content)
+
+			if nb_common_word > max_common_word:
+				max_common_word = nb_common_word
+				pageid = page['pageid']
+			nb_common_word = 0
+
+		return pageid
+		
 
 	def extracts_text(self, pageId):
 
@@ -81,4 +129,4 @@ class MediaWiki:
 
 
 m = MediaWiki('avenue charles de gaule')
-print(m.prefixsearch())
+print(m.select_title_with_more_common_word())

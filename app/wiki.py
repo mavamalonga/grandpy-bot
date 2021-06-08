@@ -62,6 +62,7 @@ class MediaWiki:
 
 		word_form_content = self.title.split() # on recupere les mots cles de la recherche
 		PAGES = self.prefixsearch()
+		print(PAGES)
 
 		max_common_word = 0
 		nb_common_word = 0
@@ -135,11 +136,11 @@ class MediaWiki:
 			return 'Failed request'
 
 	def main(self):
-		pageid = self.prefixsearch()
-		text = self.extracts_text(pageId)
+		pageid = self.select_the_best_pageid()
+		text = self.extracts_text(pageid)
 		return text
 
 
 
-m = MediaWiki('avenue charles de gaulle')
-print(m.select_the_best_pageid())
+m = MediaWiki('puces')
+print(m.main())

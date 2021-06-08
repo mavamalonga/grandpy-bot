@@ -3,48 +3,61 @@
 class Parse:
 	"""docstring for ClassName"""
 
-	form = ['Que', 'Quand', 'Pourquoi','Quel', 'Quelle', 'Lequel', 'Comment','je', 'tu', 'il', 'elle', 'on', 
-	'nous', 'vous', 'ils', 'elles','le', 'les', 'la','mais', 'ou', 'et', 'donc', 'or', 
-	'ni', 'car','?', 'est', 'plus', 'des', 'sur', 'mon']
-
-	key = ['pourquoi', 'Avenue', 'rue', 'bar', 'restaurant']
-
+	insignificant_words = { '2_character': ['a', 'à', 'je', 'tu', 'il', 'on', 'le', 'la', 'un', 
+		'me', 'ne', 'et', 'de', 'en', 'au', 'ou', 'si', 'où', 'ma'],
+		'3_character': ['est', 'les', 'pas', 'les', 'mon', 'ses', 'des', 'une', 'qui'],
+		'8_character': 'pourquoi', 
+		'7_character': 'comment',
+		'5_character': 'quand' 
+		}
 
 	def __init__(self, question):
-		self.question = question
-
-	def removes_unnecessary_words(self):
-		for word in self.form:
-			if self.word == word:
-				return False
-			
-		return True
-
-		#select start by 'x' and where len(word) = size
+		self.question = question.split()
 
 
-	def split_question (self):
-		self.key_words = []
-		self.question = self.question.split()
-		for self.word in self.question:
-			if len(self.word) >= 3:
-				re = self.removes_unnecessary_words()
-				if re == True:
-					self.key_words.append(self.word)
+	def delete_words(self):
+		only_key_words = []
+		for word in self.question:
+			if len(word) == 2:
+				for re in self.insignificant_words['2_character']:
+					if re.lower() == word.lower():
+						res = True
+				if res != True:
+					only_key_words.append(word)
+			elif len(word) == 3:
+				for re in self.insignificant_words['3_character']:
+					if re.lower() == word.lower():
+						res = True
+				if res != True:
+					only_key_words.append(word)
+			elif len(word) == 5:
+				if word.lower() != self.insignificant_words['5_character'].lower():
+					only_key_words.append(word)
+			elif len(word) == 7:
+				if word.lower() != self.insignificant_words['7_character'].lower():
+					only_key_words.append(word)
+			elif len(word) == 8:
+				if word.lower() != self.insignificant_words['8_character'].lower():
+					only_key_words.append(word)
+			else:
+				only_key_words.append(word)
 
-		if len(self.key_words) >= 2:
-			self.question = self.key_words
-			return self.question
-		else:
-			return self.key_words
+			res = False
+		return only_key_words
 
+	def concat(self, only_key_words):
+		for word in only_key_words:
+			question = word + ' '
+		return only_key_words
 
 	def main(self):
-		res = self.split_question()
+		if len(self.question) > 3:
+			question = self.delete_words()
+			question = self.concat(question)
+		else:
+			question = self.concat(self.question)
+		return question
 
 
-
-
-
-p = Parse('Avenue des charles de Gaule')
-print(p.split_question())
+P = Parse('pourquoi les puces piquent')
+print(P.main())

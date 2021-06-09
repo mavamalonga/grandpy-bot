@@ -46,14 +46,19 @@ class Parse:
 		return only_key_words
 
 	def concat(self, only_key_words):
-		for word in only_key_words:
-			question = word + ' '
-		return only_key_words
+		if len(only_key_words) > 1:
+			for word in only_key_words:
+				question = word + ' '
+			return question
+		else:
+			for word in only_key_words:
+				return word
+
 
 	def main(self):
 		if len(self.question) > 3:
 			question = self.delete_words()
 			question = self.concat(question)
+			return question
 		else:
-			question = self.concat(self.question)
-		return question
+			return self.concat(self.question)

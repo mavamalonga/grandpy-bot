@@ -8,7 +8,18 @@
 	width: 50%;
 }
 
-#log, #chat {
+#input {
+	background-color: white;
+}
+
+#log {
+	border-style: solid;
+	width: 400px;
+	height: 50px;
+}
+
+#chat {
+	background-color: white;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
@@ -19,43 +30,9 @@
 /* Optional: Makes the sample page fill the window. */
 html,
 body {
+  background-color: #89c3e8;
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
-#papy {
-	display: block;
-	width: 300px;
-}
-
-#input {
-	display: block;
-	width: 300px;
-	background-color: white;
-	border: white;
-}
-
-#submit {
-	display: block;
-	margin-left: 200px;
-}
-
-/* Chat containers */
-.container {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	border: 2px solid #dedede;
-	background-color: #f1f1f1;
-	border-radius: 5px;
-	padding: 10px;
-	margin: 10px 0;
-}
-
-/* Darker chat container */
-.darker {
-	width: 50%;
-	border-color: #ccc;
-	background-color: #ddd;
-}

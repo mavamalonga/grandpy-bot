@@ -15,6 +15,3 @@ class Vocabulary:
 	def say(self):
 		return random.choice(self.catch_phrase)
 
-
-b = Vocabulary()
-print(b.say())

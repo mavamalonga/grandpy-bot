@@ -57,7 +57,3 @@ class Parse:
 		else:
 			question = self.concat(self.question)
 		return question
-
-
-P = Parse('pourquoi les puces piquent')
-print(P.main())

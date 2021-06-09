@@ -62,7 +62,6 @@ class MediaWiki:
 
 		word_form_content = self.title.split() # on recupere les mots cles de la recherche
 		PAGES = self.prefixsearch()
-		print(PAGES)
 
 		max_common_word = 0
 		nb_common_word = 0
@@ -142,5 +141,4 @@ class MediaWiki:
 
 
 
-m = MediaWiki('puces')
-print(m.main())
+

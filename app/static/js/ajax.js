@@ -1,74 +1,27 @@
-var response = {
-  'geolocation': {
-    'lat': -34.397,
-    'lng': 150.644
+
+(function() {
+  var httpRequest;
+  document.getElementById("submit").addEventListener('click', makeRequest);
+
+  function makeRequest() {
+    httpRequest = new XMLHttpRequest();
+
+    if (!httpRequest) {
+      alert('Abandon :( Impossible de créer une instance de XMLHTTP');
+      return false;
+    }
+    httpRequest.onreadystatechange = alertContents;
+    httpRequest.open('GET', 'http://127.0.0.1:5000/api');
+    httpRequest.send();
   }
-};
 
-
-let map;
-function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: parseInt(response['geolocation']['lat']), lng: parseInt(response['geolocation']['lng']) },
-    zoom: 8,
-  });
-}
-
-
-function checkInputText(){
-
-  question = document.getElementById("input").value;
-  if (question === ""){
-    text = 'False';
-  }else{
-    text = 'True';
+  function alertContents() {
+    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+      if (httpRequest.status === 200) {
+        alert(httpRequest.responseText);
+      } else {
+        alert('Il y a eu un problème avec la requête.');
+      }
+    }
   }
-}
-
-
-function makeRequest(event) {
-    var xhttp = new XMLHttpRequest();
-
-    checkInputText()
-    console.log(text)
-
-    if (text === 'True'){
-        let endpoint = "http://127.0.0.1:5000/api"
-        let url = endpoint.concat('/', question);
-        xhttp.open("GET", url, true);
-        xhttp.send();
-        event.preventDefault();
-
-        xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-           response = JSON.parse(this.responseText)
-           console.log(response)
-           if (response !== ""){
-
-              if (response["sentences"] !== ""){
-                //let chat = document.getElementById('chat');
-                //let div = document.createElement('div');
-                //div.innerHTML = response['sentences']
-                //chat.appendChild(div);
-                document.getElementById("papy").innerHTML = response['sentences']
-              }
-
-              if (response["geolocation"] !== ""){
-                initMap()
-              }
-              
-            }else{
-              document.getElementById("log").innerHTML = "Désolé mec j'ai pas capté ta question";
-            }
-          }
-        }
-    }else if (text === 'False'){
-      document.getElementById("log").innerHTML = "Désolé mec j'ai pas capté ta question";
-    };
-
-  };
-
-
-
-const form = document.getElementById('form');
-form.addEventListener('submit', makeRequest);
+})();

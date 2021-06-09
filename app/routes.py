@@ -3,22 +3,20 @@ from app import app
 from app.places import Places
 from app.wiki import MediaWiki
 from app.grandpy import Vocabulary
+from app.parse_question import Parse
 
 @app.route('/', methods=('GET', 'POST'))
 @app.route('/index', methods=('GET', 'POST'))
 def index():
-	if request.method == 'GET':
-		voice = Vocabulary()
-		catch_phrase =  voice.say()
+	return render_template('index.html')
 
-	return render_template('index.html', catch_phrase=catch_phrase)
-
-@app.route('/api/<message>', methods=('GET', 'POST'))
+#@app.route('/api/<message>', methods=('GET', 'POST'))
+@app.route('/api', methods=('GET', 'POST'))
 def api(message):
+	message = 'Marseille'
+	parse = Parse(message)
+	parsed_message = parse.main()
+	wiki = MediaWiki(parsed_message)
+	text = wiki.main()
 
-	places = Places('AIzaSyAkDUNgcXqkdc5lEgcNf-DbetL0kDnkH-A', str(message))
-	geolocation = places.get_geolocation()
-	wiki = MediaWiki(str(message), geolocation)
-	sentences = wiki.main()
-
-	return jsonify({'geolocation': geolocation, 'sentences': sentences})
+	return jsonify({'geo': 'location', 'text': text})

@@ -5,7 +5,6 @@ function chatBox(){
 	var chars = parseInt(textarea.value['length']);
 	var rows = parseInt(textarea.getAttribute('rows'));
 
-
   	var divLastcharsMax = document.getElementById('divLastcharsMax');
   	var lastCharsMax = parseInt(divLastcharsMax.getAttribute('value'));
 	

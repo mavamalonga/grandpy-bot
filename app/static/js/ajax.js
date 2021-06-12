@@ -31,13 +31,6 @@ function makeRequest(event) {
       response = JSON.parse(this.responseText)
       messageHistory('grandpy', response['text'])
 
-      /*
-      document.querySelector('.bulle-grandpy p').innerHTML = response['text']
-      var grandpy = document.querySelector('.bulle-grandpy');
-      var divChat = document.getElementById('chat');
-      divChat.insertBefore(grandpy, divChat.children[-1]);
-      */
-
     }
   };
   var message = document.getElementById("input").value;

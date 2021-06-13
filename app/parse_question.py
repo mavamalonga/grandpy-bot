@@ -62,3 +62,4 @@ class Parse:
 			return question
 		else:
 			return self.concat(self.question)
+

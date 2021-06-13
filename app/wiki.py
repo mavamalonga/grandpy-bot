@@ -88,7 +88,7 @@ class MediaWiki:
 		self.params = { 
 			"action": "query",
 			"prop": "extracts",
-			"exsentences": 10,
+			"exsentences": 1,
 			"exlimit":1,
 			"pageids": pageId,
 			"explaintext":1,
@@ -138,7 +138,6 @@ class MediaWiki:
 		pageid = self.select_the_best_pageid()
 		text = self.extracts_text(pageid)
 		return text
-
 
 
 

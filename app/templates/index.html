@@ -1,21 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-  <title></title>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}"/>
+	<meta charset="utf-8">
+	<title>Whatsapp UI</title>
+	 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/app.css') }}"/>
 </head>
 <body>
-  <div id='divLastcharsMax' value="0"></div>
-  <div id="chat">
-  <p class="bulle-grandpy">{{ say }}</p>
-  </div>
-  <form id="form">
-    <textarea id=input name="Text1" cols="45" rows="1" oninput="chatBox()"></textarea>
-    <button class='input' type="submit" >Submit</button>
-  </form>
-  <div id="map"></div>
-  <script type="text/javascript" src="{{ url_for('static', filename='js/ajax.js') }}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename='js/base.js') }}"></script>
+	<div class="container">
+		<div class="chat">
+			<div class="chat-header">
+				<div class="profile">
+					<div class="left">
+						<img class="pp" src="{{ url_for('static', filename='img/arrow.jpg') }}"/>
+						<img class="pp" src="{{ url_for('static', filename='img/grandpy.jpg') }}"/>
+						<h2>Grandpy</h2>
+						<span>online</span>
+					</div>
+					<div class="right">
+					</div>
+				</div>
+			</div>
+			<div class="chat-box">
+				<div class="chat-r">
+					<div class="mess mess-r">
+						<p>
+							{{ say }}
+						</p>
+						<div class="check">
+							<span>{{ time }}</span>
+							<img src="{{ url_for('static', filename='img/grandpy.jpg') }}" alt="">
+						</div>	
+					</div>
+				</div>
+				<div class="chat-l">
+					<div class="mess">
+						<p>
+							Oh! hi
+						</p>
+						<div class="check">
+							<span>4:00 PM</span>
+							<img src="{{ url_for('static', filename='img/grandpy.jpg') }}" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="chat-footer">
+				<img class="emo" src="{{ url_for('static', filename='img/emoji.jpg') }}"/>
+				<img class="send" src="{{ url_for('static', filename='img/send.png') }}"/>
+				<textarea id="text-msg" placeholder="Type a message"></textarea>
+			</div>
+			<script type="text/javascript" src="{{ url_for('static', filename='js/ajax.js') }}"></script>	
+		</div>
+	</div>
 </body>
 </html>

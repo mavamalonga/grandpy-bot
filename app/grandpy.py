@@ -1,4 +1,6 @@
 import random
+import datetime
+
 
 class Brain:
 	dictionary = {
@@ -10,10 +12,15 @@ class Brain:
 		'not_understand': ['Je n\'ai pas compris ta réponse', 'Peut-tu repeter ta question stp ?']
 		}
 
+
 	def __init__(self):
 		pass
 
-	def say(self):
-		return random.choice(self.dictionary['presentation'])
+	def main(self):
+		x = datetime.datetime.now()
+		time = x.strftime("%H") + ":" + x.strftime("%M")
+		return {'phrase': random.choice(self.dictionary['presentation']),
+				'time': time
+				}
 
 

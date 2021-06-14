@@ -10,6 +10,7 @@
 	margin: auto;
 }
 
+
 .chat {
 	display: flex;
 	flex-direction: column;
@@ -96,6 +97,7 @@
 }
 
 .chat-box {
+	overflow: scroll;
 	background: url( {{ url_for('static', filename='img/home.jpg') }});
 	background-attachment: fixed;
 	padding-left: 20px;

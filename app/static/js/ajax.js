@@ -1,3 +1,9 @@
+var updateScrollbar = function() {
+  var elem = document.getElementsByClassName('chat_box');
+  elem.scrollTop = elem.scrollHeight;
+  console.log(elem.scrollHeight);
+};
+
 
 
 var messageBubble = function(user, message){
@@ -37,6 +43,7 @@ var messageBubble = function(user, message){
     div_chat_r.appendChild(div_mess_r);
 
     chat_box.insertBefore(div_chat_r, chat_box.children[-1]);
+    updateScrollbar();
 
 
   }else if(user=='guest'){
@@ -74,6 +81,7 @@ var messageBubble = function(user, message){
     div_chat_l.appendChild(div_mess);
 
     chat_box.insertBefore(div_chat_l, chat_box.children[-1]);
+    updateScrollbar();
   }
 }
 

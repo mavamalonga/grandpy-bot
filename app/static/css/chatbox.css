@@ -1,20 +1,14 @@
-*{
-	padding: 0;
-	margin: 0;
-	box-sizing: border-box;
-	font-family: sans-serif;
-}
-
 .container {
-	width: 500px;
-	margin: auto;
-}
+	width: 400px;
+	height: 500px;
+	margin-left: 200px;
 
+}
 
 .chat {
 	display: flex;
 	flex-direction: column;
-	height: 100vh;
+	height: 80vh;
 	background: #f1f0e8;
 }
 
@@ -181,7 +175,6 @@
 	justify-content: center;
 	align-items: center;
 	border-radius: 60px;
-	margin-top: ;
 	position: relative;
 	cursor: pointer;
 }
@@ -202,4 +195,3 @@
 	color: #555;
 	resize: none;
 }
-
